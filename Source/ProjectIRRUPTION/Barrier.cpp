@@ -3,6 +3,7 @@
 
 #include "Barrier.h"
 
+#include "PPlayerCharacter.h"
 #include "ProjectIRRUPTIONGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -41,7 +42,19 @@ void ABarrier::Tick(float DeltaTime)
 
 void ABarrier::Interact()
 {
-	
+	BoxComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	AGameModeBase* GameModeBase = UGameplayStatics::GetGameMode(this);
+
+	if(GameModeBase)
+	{
+		AProjectIRRUPTIONGameModeBase* MyGameMode = Cast<AProjectIRRUPTIONGameModeBase>(GameModeBase);
+
+		if(MyGameMode)
+			MyGameMode->SetHintText("");
+	}
+
+	Destroy();
 }
 
 void ABarrier::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -50,6 +63,11 @@ void ABarrier::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* 
 
 	if(OtherActor->ActorHasTag("Player"))
 	{
+		APPlayerCharacter* MyPlayer = Cast<APPlayerCharacter>(OtherActor);
+
+		if(MyPlayer)
+			MyPlayer->SetInteractable(this);
+		
 		AGameModeBase* GameModeBase = UGameplayStatics::GetGameMode(this);
 
 		if(GameModeBase)
@@ -77,6 +95,11 @@ void ABarrier::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 
 	if(OtherActor->ActorHasTag("Player"))
 	{
+		APPlayerCharacter* MyPlayer = Cast<APPlayerCharacter>(OtherActor);
+
+		if(MyPlayer)
+			MyPlayer->SetInteractable(nullptr);
+		
 		AGameModeBase* GameModeBase = UGameplayStatics::GetGameMode(this);
 
 		if(GameModeBase)

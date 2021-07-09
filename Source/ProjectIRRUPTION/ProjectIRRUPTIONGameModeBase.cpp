@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/EditableText.h"
 #include "Components/TextBlock.h"
+#include "Kismet/GameplayStatics.h"
 
 AProjectIRRUPTIONGameModeBase::AProjectIRRUPTIONGameModeBase()
 {

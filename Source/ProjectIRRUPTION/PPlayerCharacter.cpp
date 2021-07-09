@@ -3,6 +3,7 @@
 
 #include "PPlayerCharacter.h"
 
+#include "IInteractable.h"
 #include "PaperFlipbookComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -47,6 +48,7 @@ void APPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &APPlayerCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveSides", this, &APPlayerCharacter::MoveSides);
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APPlayerCharacter::Interact);
 }
 
 
@@ -79,4 +81,15 @@ void APPlayerCharacter::MoveSides(float AxisValue)
 void APPlayerCharacter::OnCapsuleComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	GEngine->AddOnScreenDebugMessage(rand(), 2, FColor::Cyan, FString::Printf(TEXT("Colidiu")));
+}
+
+void APPlayerCharacter::SetInteractable(TScriptInterface<IInteractable> NewInteractable)
+{
+	this->Interactable = NewInteractable;
+}
+
+void APPlayerCharacter::Interact()
+{
+	if(Interactable)
+		Interactable->Interact();
 }
