@@ -24,6 +24,8 @@ ABarrier::ABarrier()
 	SpriteComponent->SetupAttachment(CapsuleComponent);
 
 	SetRootComponent(CapsuleComponent);
+
+	CapsuleComponent->SetGenerateOverlapEvents(false);
 }
 
 // Called when the game starts or when spawned
@@ -31,6 +33,7 @@ void ABarrier::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	GetWorld()->GetTimerManager().SetTimer(CapsuleOverlapTimerHandle, this, &ABarrier::EnableCapsuleOverlapEvents, 1.0f, false, 0.5f);
 }
 
 // Called every frame
@@ -39,6 +42,17 @@ void ABarrier::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+
+void ABarrier::EnableCapsuleOverlapEvents()
+{
+	if(CapsuleOverlapTimerHandle.IsValid())
+		GetWorld()->GetTimerManager().ClearTimer(CapsuleOverlapTimerHandle);
+
+	CapsuleComponent->SetGenerateOverlapEvents(true);
+
+	GEngine->AddOnScreenDebugMessage(rand(), 2, FColor::Cyan, "Timer");
+}
+
 
 void ABarrier::Interact()
 {
