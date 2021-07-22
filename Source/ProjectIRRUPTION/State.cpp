@@ -16,7 +16,7 @@ void UState::OnStateEnter_Implementation(class AStateManager* StateManager)
 	
 	StateManager->GetSprite()->OnFinishedPlaying.Clear();
 	
-	StateManager->GetSprite()->OnFinishedPlaying.AddDynamic(StateManager, &AStateManager::OnAnimationEnd);
+	StateManager->GetSprite()->OnFinishedPlaying.AddDynamic(StateManager, &AStateManager::OnStateAnimationEnd);
 }
 
 void UState::OnStateExit_Implementation(class AStateManager* StateManager)

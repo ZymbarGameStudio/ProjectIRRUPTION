@@ -50,7 +50,7 @@ void AStateManager::SetPreviousState()
 		SetState(PreviousState);
 }
 
-void AStateManager::OnAnimationEnd()
+void AStateManager::OnStateAnimationEnd()
 {
 	CurrentState->OnAnimationEnd_Implementation(this);
 }

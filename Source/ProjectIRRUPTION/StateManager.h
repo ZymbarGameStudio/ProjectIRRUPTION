@@ -37,5 +37,5 @@ public:
 	virtual void SetPreviousState();
 
 	UFUNCTION()
-	void OnAnimationEnd();
+	void OnStateAnimationEnd();
 };
