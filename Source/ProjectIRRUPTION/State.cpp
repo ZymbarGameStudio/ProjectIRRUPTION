@@ -8,13 +8,15 @@
 
 UState::UState()
 {
-	
 }
 
 void UState::OnStateEnter_Implementation(class AStateManager* StateManager)
 {
 	StateManager->GetSprite()->SetFlipbook(this->Animation);
-	StateManager->GetSprite()->OnFinishedPlaying.AddDynamic(this, &UState::OnAnimationEnd_Implementation);
+	
+	StateManager->GetSprite()->OnFinishedPlaying.Clear();
+	
+	StateManager->GetSprite()->OnFinishedPlaying.AddDynamic(StateManager, &AStateManager::OnAnimationEnd);
 }
 
 void UState::OnStateExit_Implementation(class AStateManager* StateManager)
@@ -27,7 +29,7 @@ void UState::Tick_Implementation(float DeltaSeconds, class AStateManager* StateM
 	
 }
 
-void UState::OnAnimationEnd_Implementation()
+void UState::OnAnimationEnd_Implementation(class AStateManager* StateManager)
 {
-	GEngine->AddOnScreenDebugMessage(rand(), 2, FColor::Blue,  "Finished Animation");
+	GEngine->AddOnScreenDebugMessage(rand(), 2, FColor::Blue, "Finished");
 }

@@ -26,7 +26,7 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void OnStateExit(class AStateManager* StateManager);
-
+	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void OnAnimationEnd();
+	void OnAnimationEnd(class AStateManager* StateManager);
 };

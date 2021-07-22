@@ -31,7 +31,6 @@ void AStateManager::Tick(float DeltaTime)
 void AStateManager::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 void AStateManager::SetState(UState* NewState)
@@ -49,4 +48,9 @@ void AStateManager::SetPreviousState()
 {
 	if(PreviousState)
 		SetState(PreviousState);
+}
+
+void AStateManager::OnAnimationEnd()
+{
+	CurrentState->OnAnimationEnd_Implementation(this);
 }

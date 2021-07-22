@@ -35,4 +35,7 @@ public:
 	virtual void SetState(UState* NewState);
 
 	virtual void SetPreviousState();
+
+	UFUNCTION()
+	void OnAnimationEnd();
 };
