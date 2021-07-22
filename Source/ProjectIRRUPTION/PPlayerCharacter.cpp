@@ -8,6 +8,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Perception/AIPerceptionComponent.h"
 
 APPlayerCharacter::APPlayerCharacter()
@@ -16,30 +17,26 @@ APPlayerCharacter::APPlayerCharacter()
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 
 	SpringArmComponent->SetRelativeRotation(FQuat(FRotator(0.0f, 90.0f, 0.0f)));
-	
 	GetSprite()->SetRelativeRotation(FQuat(FRotator(0.0f, -90.0f, 0.0f)));
 
 	SpringArmComponent->SetupAttachment(GetSprite());
-
 	CameraComponent->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
-	
-	GetSprite()->SetFlipbook(IdleFlipBook);
 
 	SpringArmComponent->bUsePawnControlRotation = true;
 
 	this->Tags.Add("Player");
 
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &APPlayerCharacter::OnCapsuleComponentBeginOverlap);
-}
 
-void APPlayerCharacter::Tick(float Deltatime)
-{
-	Super::Tick(Deltatime);
+	GetCharacterMovement()->MaxWalkSpeed = 200;
 }
 
 void APPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if(Idle)
+		SetState(Cast<UState>(Idle->GetDefaultObject(true)));
 }
 
 void APPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

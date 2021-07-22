@@ -7,6 +7,7 @@
 #include "PaperFlipbook.h"
 #include "CoreMinimal.h"
 #include "PaperCharacter.h"
+#include "StateManager.h"
 #include "Perception/AIPerceptionTypes.h"
 
 #include "PPlayerCharacter.generated.h"
@@ -15,13 +16,16 @@
  * 
  */
 UCLASS()
-class PROJECTIRRUPTION_API APPlayerCharacter : public APaperCharacter
+class PROJECTIRRUPTION_API APPlayerCharacter : public AStateManager
 {
 	GENERATED_BODY()
 
+	protected:
+		UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Animations)
+		TSubclassOf<class UState> Idle;
+
 	public:
 		APPlayerCharacter();
-		virtual void Tick(float Deltatime) override;
 		virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 		UFUNCTION()
 		void OnCapsuleComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
@@ -30,9 +34,6 @@ class PROJECTIRRUPTION_API APPlayerCharacter : public APaperCharacter
 	
 	protected:
 		virtual void BeginPlay() override;
-
-		UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Flipbook)
-		class UPaperFlipbook* IdleFlipBook;
 
 		UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		class USpringArmComponent* SpringArmComponent;

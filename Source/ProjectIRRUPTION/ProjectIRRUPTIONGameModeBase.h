@@ -38,8 +38,10 @@ class PROJECTIRRUPTION_API AProjectIRRUPTIONGameModeBase : public AGameModeBase
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Widget)
 		TSubclassOf<UUserWidget> WidgetReference;
+	
 		UPROPERTY()
 		UUserWidget* MainWidget;
+	
 		UPROPERTY()
 		UTextBlock* HintText;
 };
