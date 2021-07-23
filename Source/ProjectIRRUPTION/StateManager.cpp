@@ -3,6 +3,8 @@
 
 #include "StateManager.h"
 
+#include "PaperFlipbookComponent.h"
+
 // Sets default values
 AStateManager::AStateManager()
 {
@@ -36,22 +38,24 @@ void AStateManager::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 void AStateManager::SetState(UState* NewState)
 {
 	if(CurrentState)
-	{
 		CurrentState->OnStateExit(this);
 
-		if(CurrentState->Type == EStateType::MOVIMENTATION)
-			PreviousState = CurrentState;
-	}
-	
+	if(NewState->Type == EStateType::MOVIMENTATION)
+		CurrentMovimentationState = NewState;
+
+	PreviousState = CurrentState;
 	CurrentState = NewState;
 
 	CurrentState->OnStateEnter(this);
 }
 
-void AStateManager::SetPreviousState()
+void AStateManager::SetStateToCurrentMovimentationState()
 {
-	if(PreviousState)
-		SetState(PreviousState);
+	if(CurrentMovimentationState)
+	{
+		SetState(CurrentMovimentationState);
+		GetSprite()->SetLooping(true);
+	}
 }
 
 void AStateManager::OnStateAnimationEnd()

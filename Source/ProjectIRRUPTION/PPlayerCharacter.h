@@ -21,6 +21,7 @@ class PROJECTIRRUPTION_API APPlayerCharacter : public AStateManager
 	GENERATED_BODY()
 
 protected:
+	// MOVEMENT STATES
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Animations)
 	TSubclassOf<class UState> Idle;
 
@@ -32,6 +33,19 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Animations)
 	TSubclassOf<class UState> IdleUp;
+
+	// ATTACK STATES
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Animations)
+	TSubclassOf<class UState> AttackDown;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Animations)
+	TSubclassOf<class UState> AttackLeft;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Animations)
+	TSubclassOf<class UState> AttackRight;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Animations)
+	TSubclassOf<class UState> AttackUp;
 
 public:
 	APPlayerCharacter();
@@ -45,24 +59,32 @@ public:
 	void SetInteractable(TScriptInterface<class IInteractable> NewInteractable);
 
 protected:
+	// INPUT/ACTIONS
+	
+	void MoveForward(float AxisValue);
+	
+	void MoveSides(float AxisValue);
+	
+	void Interact();
+
+	void Attack();
+
+	// ENGINE
 	virtual void BeginPlay() override;
 	
 	virtual void Tick(float DeltaSeconds) override;
-
+	
+	// STATE MACHINE
 	void ProcessMovementStateMachine();
-
+	
+	//CAMERA
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class USpringArmComponent* SpringArmComponent;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class UCameraComponent* CameraComponent;
 
+	//INTERACTABLE
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TScriptInterface<class IInteractable> Interactable;
-
-	void MoveForward(float AxisValue);
-	
-	void MoveSides(float AxisValue);
-	
-	void Interact();
 };

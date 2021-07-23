@@ -3,6 +3,9 @@
 
 #include "IdleState.h"
 
+#include "PaperFlipbookComponent.h"
+#include "StateManager.h"
+
 UIdleState::UIdleState()
 {
 	Type = EStateType::MOVIMENTATION;

@@ -3,8 +3,12 @@
 
 #include "PPlayerCharacter.h"
 
+#include "IdleState.h"
 #include "IInteractable.h"
 #include "PaperFlipbookComponent.h"
+#include "PlayerIdleLeftState.h"
+#include "PlayerIdleRightState.h"
+#include "PlayerIdleUpState.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -55,7 +59,9 @@ void APPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &APPlayerCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveSides", this, &APPlayerCharacter::MoveSides);
+
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APPlayerCharacter::Interact);
+	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &APPlayerCharacter::Attack);
 }
 
 
@@ -121,6 +127,36 @@ void APPlayerCharacter::ProcessMovementStateMachine()
 				SetState(Cast<UState>(IdleLeft->GetDefaultObject(true)));
 
 			MovementDirection = FVector::ZeroVector;
+		}
+	}
+}
+
+void APPlayerCharacter::Attack()
+{
+	if(CanAttack)
+	{
+		if(MovementDirection != FVector::ZeroVector)
+		{
+			if(MovementDirection.X > 0)
+				SetState(Cast<UState>(AttackUp->GetDefaultObject(true)));
+			else if(MovementDirection.X < 0)
+				SetState(Cast<UState>(AttackDown->GetDefaultObject(true)));
+			else if(MovementDirection.Y < 0)
+				SetState(Cast<UState>(AttackRight->GetDefaultObject(true)));
+			else if(MovementDirection.Y > 0)
+				SetState(Cast<UState>(AttackLeft->GetDefaultObject(true)));
+		}
+		else
+		{
+			
+			if(CurrentMovimentationState->GetClass() == IdleUp->GetDefaultObject()->GetClass())
+				SetState(Cast<UState>(AttackUp->GetDefaultObject(true)));
+			else if(CurrentMovimentationState->GetClass() == Idle->GetDefaultObject()->GetClass())
+				SetState(Cast<UState>(AttackDown->GetDefaultObject(true)));
+			else if(CurrentMovimentationState->GetClass() == IdleRight->GetDefaultObject()->GetClass())
+				SetState(Cast<UState>(AttackRight->GetDefaultObject(true)));
+			else if(CurrentMovimentationState->GetClass() == IdleLeft->GetDefaultObject()->GetClass())
+				SetState(Cast<UState>(AttackLeft->GetDefaultObject(true)));
 		}
 	}
 }

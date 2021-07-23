@@ -35,6 +35,6 @@ void UState::OnAnimationEnd_Implementation(class AStateManager* StateManager)
 
 	if(Type == EStateType::COMBAT)
 		StateManager->SetIgnoreMovementStateMachine(false);
-	
-	StateManager->SetPreviousState();
+
+	StateManager->SetStateToCurrentMovimentationState();
 }

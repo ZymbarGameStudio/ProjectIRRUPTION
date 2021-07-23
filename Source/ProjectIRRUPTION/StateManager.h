@@ -24,10 +24,13 @@ protected:
 
 	class UState* CurrentState;
 	class UState* PreviousState;
+	class UState* CurrentMovimentationState;
 
 	struct FVector MovementDirection = FVector::ZeroVector;
 
 	bool IgnoreMovementStateMachine = false;
+	
+	bool CanAttack = true;
 
 public:	
 	// Called every frame
@@ -38,7 +41,7 @@ public:
 
 	virtual void SetState(UState* NewState);
 
-	virtual void SetPreviousState();
+	virtual void SetStateToCurrentMovimentationState();
 
 	UFUNCTION()
 	void OnStateAnimationEnd();
