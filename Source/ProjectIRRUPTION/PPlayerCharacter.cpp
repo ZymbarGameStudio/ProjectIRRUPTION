@@ -135,28 +135,15 @@ void APPlayerCharacter::Attack()
 {
 	if(CanAttack)
 	{
-		if(MovementDirection != FVector::ZeroVector)
-		{
-			if(MovementDirection.X > 0)
-				SetState(Cast<UState>(AttackUp->GetDefaultObject(true)));
-			else if(MovementDirection.X < 0)
-				SetState(Cast<UState>(AttackDown->GetDefaultObject(true)));
-			else if(MovementDirection.Y < 0)
-				SetState(Cast<UState>(AttackRight->GetDefaultObject(true)));
-			else if(MovementDirection.Y > 0)
-				SetState(Cast<UState>(AttackLeft->GetDefaultObject(true)));
-		}
-		else
-		{
-			
-			if(CurrentMovimentationState->GetClass() == IdleUp->GetDefaultObject()->GetClass())
-				SetState(Cast<UState>(AttackUp->GetDefaultObject(true)));
-			else if(CurrentMovimentationState->GetClass() == Idle->GetDefaultObject()->GetClass())
-				SetState(Cast<UState>(AttackDown->GetDefaultObject(true)));
-			else if(CurrentMovimentationState->GetClass() == IdleRight->GetDefaultObject()->GetClass())
-				SetState(Cast<UState>(AttackRight->GetDefaultObject(true)));
-			else if(CurrentMovimentationState->GetClass() == IdleLeft->GetDefaultObject()->GetClass())
-				SetState(Cast<UState>(AttackLeft->GetDefaultObject(true)));
-		}
+		IgnoreMovementStateMachine = true;
+		
+		if(CurrentMovimentationState->GetClass() == IdleUp->GetDefaultObject()->GetClass())
+			SetState(Cast<UState>(AttackUp->GetDefaultObject(true)));
+		else if(CurrentMovimentationState->GetClass() == Idle->GetDefaultObject()->GetClass())
+			SetState(Cast<UState>(AttackDown->GetDefaultObject(true)));
+		else if(CurrentMovimentationState->GetClass() == IdleRight->GetDefaultObject()->GetClass())
+			SetState(Cast<UState>(AttackRight->GetDefaultObject(true)));
+		else if(CurrentMovimentationState->GetClass() == IdleLeft->GetDefaultObject()->GetClass())
+			SetState(Cast<UState>(AttackLeft->GetDefaultObject(true)));
 	}
 }
