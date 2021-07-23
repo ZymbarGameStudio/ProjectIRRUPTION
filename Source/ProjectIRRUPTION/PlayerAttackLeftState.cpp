@@ -10,10 +10,3 @@ UPlayerAttackLeftState::UPlayerAttackLeftState()
 {
 	Type = EStateType::COMBAT;
 }
-
-void UPlayerAttackLeftState::OnStateEnter_Implementation(AStateManager* StateManager)
-{
-	StateManager->GetSprite()->SetLooping(false);
-
-	Super::OnStateEnter_Implementation(StateManager);
-}

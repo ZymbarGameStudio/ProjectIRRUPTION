@@ -52,18 +52,26 @@ void AStateManager::SetState(UState* NewState)
 void AStateManager::SetStateToCurrentMovimentationState()
 {
 	if(CurrentMovimentationState)
-	{
 		SetState(CurrentMovimentationState);
-		GetSprite()->SetLooping(true);
-	}
-}
-
-void AStateManager::OnStateAnimationEnd()
-{
-	CurrentState->OnAnimationEnd_Implementation(this);
 }
 
 void AStateManager::SetIgnoreMovementStateMachine(bool Ignore)
 {
 	IgnoreMovementStateMachine = Ignore;
+}
+
+void AStateManager::OnAnimationEnd()
+{
+	if(OnAnimationEndTimerHandle.IsValid())
+		GetWorld()->GetTimerManager().ClearTimer(OnAnimationEndTimerHandle);
+	
+	CurrentState->OnAnimationEnd_Implementation(this);
+}
+
+void AStateManager::SetAnimationEnd()
+{
+	if(OnAnimationEndTimerHandle.IsValid())
+		GetWorld()->GetTimerManager().ClearTimer(OnAnimationEndTimerHandle);
+	
+	GetWorld()->GetTimerManager().SetTimer(OnAnimationEndTimerHandle, this, &AStateManager::OnAnimationEnd, GetSprite()->GetFlipbookLength());
 }

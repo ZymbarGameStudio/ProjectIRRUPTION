@@ -16,7 +16,4 @@ class PROJECTIRRUPTION_API UPlayerAttackUpState : public UState
 
 public:
 	UPlayerAttackUpState();
-
-protected:
-	virtual void OnStateEnter_Implementation(AStateManager* StateManager) override;
 };

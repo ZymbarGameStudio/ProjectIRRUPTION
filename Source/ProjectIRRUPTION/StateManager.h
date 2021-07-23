@@ -32,6 +32,8 @@ protected:
 	
 	bool CanAttack = true;
 
+	struct FTimerHandle OnAnimationEndTimerHandle;
+	void OnAnimationEnd();
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -43,8 +45,7 @@ public:
 
 	virtual void SetStateToCurrentMovimentationState();
 
-	UFUNCTION()
-	void OnStateAnimationEnd();
-
 	void SetIgnoreMovementStateMachine(bool Ignore);
+	
+	void SetAnimationEnd();
 };

@@ -13,10 +13,9 @@ UState::UState()
 void UState::OnStateEnter_Implementation(class AStateManager* StateManager)
 {
 	StateManager->GetSprite()->SetFlipbook(this->Animation);
-	
-	StateManager->GetSprite()->OnFinishedPlaying.Clear();
-	
-	StateManager->GetSprite()->OnFinishedPlaying.AddDynamic(StateManager, &AStateManager::OnStateAnimationEnd);
+
+	if(Type == EStateType::COMBAT)
+		StateManager->SetAnimationEnd();
 }
 
 void UState::OnStateExit_Implementation(class AStateManager* StateManager)
