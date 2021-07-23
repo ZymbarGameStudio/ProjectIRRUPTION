@@ -36,9 +36,13 @@ void AStateManager::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 void AStateManager::SetState(UState* NewState)
 {
 	if(CurrentState)
+	{
 		CurrentState->OnStateExit(this);
 
-	PreviousState = CurrentState;
+		if(CurrentState->Type == EStateType::MOVIMENTATION)
+			PreviousState = CurrentState;
+	}
+	
 	CurrentState = NewState;
 
 	CurrentState->OnStateEnter(this);

@@ -13,5 +13,7 @@ UCLASS()
 class PROJECTIRRUPTION_API UPlayerIdleLeftState : public UState
 {
 	GENERATED_BODY()
-	
+
+public:
+	UPlayerIdleLeftState();
 };

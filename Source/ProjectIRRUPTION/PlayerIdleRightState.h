@@ -14,4 +14,6 @@ class PROJECTIRRUPTION_API UPlayerIdleRightState : public UState
 {
 	GENERATED_BODY()
 	
+public:
+	UPlayerIdleRightState();
 };

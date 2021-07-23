@@ -14,6 +14,8 @@ class UState: public UObject
 
 public:
 	UState();
+
+	TEnumAsByte<enum EStateType> Type;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	class UPaperFlipbook* Animation;
@@ -29,4 +31,11 @@ public:
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void OnAnimationEnd(class AStateManager* StateManager);
+};
+
+UENUM()
+enum EStateType
+{
+	MOVIMENTATION,
+	COMBAT
 };

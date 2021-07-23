@@ -2,3 +2,8 @@
 
 
 #include "IdleState.h"
+
+UIdleState::UIdleState()
+{
+	Type = EStateType::MOVIMENTATION;
+}

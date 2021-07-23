@@ -3,3 +3,7 @@
 
 #include "PlayerIdleUpState.h"
 
+UPlayerIdleUpState::UPlayerIdleUpState()
+{
+	Type = EStateType::MOVIMENTATION;
+}

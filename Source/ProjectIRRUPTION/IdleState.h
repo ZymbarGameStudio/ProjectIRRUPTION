@@ -14,4 +14,6 @@ class PROJECTIRRUPTION_API UIdleState : public UState
 {
 	GENERATED_BODY()
 
+public:
+	UIdleState();
 };
