@@ -27,6 +27,8 @@ protected:
 
 	struct FVector MovementDirection = FVector::ZeroVector;
 
+	bool IgnoreMovementStateMachine = false;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -40,4 +42,6 @@ public:
 
 	UFUNCTION()
 	void OnStateAnimationEnd();
+
+	void SetIgnoreMovementStateMachine(bool Ignore);
 };

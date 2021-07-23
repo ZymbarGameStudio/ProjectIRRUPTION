@@ -58,3 +58,8 @@ void AStateManager::OnStateAnimationEnd()
 {
 	CurrentState->OnAnimationEnd_Implementation(this);
 }
+
+void AStateManager::SetIgnoreMovementStateMachine(bool Ignore)
+{
+	IgnoreMovementStateMachine = Ignore;
+}

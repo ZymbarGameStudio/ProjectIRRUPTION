@@ -29,6 +29,8 @@ APPlayerCharacter::APPlayerCharacter()
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &APPlayerCharacter::OnCapsuleComponentBeginOverlap);
 
 	GetCharacterMovement()->MaxWalkSpeed = 200;
+
+	CameraComponent->SetProjectionMode(ECameraProjectionMode::Orthographic);
 }
 
 void APPlayerCharacter::BeginPlay()
@@ -105,17 +107,20 @@ void APPlayerCharacter::Interact()
 
 void APPlayerCharacter::ProcessMovementStateMachine()
 {
-	if(MovementDirection != FVector::ZeroVector)
+	if(!IgnoreMovementStateMachine)
 	{
-		if(MovementDirection.X > 0)
-			SetState(Cast<UState>(IdleUp->GetDefaultObject(true)));
-		else if(MovementDirection.X < 0)
-			SetState(Cast<UState>(Idle->GetDefaultObject(true)));
-		else if(MovementDirection.Y < 0)
-			SetState(Cast<UState>(IdleRight->GetDefaultObject(true)));
-		else if(MovementDirection.Y > 0)
-			SetState(Cast<UState>(IdleLeft->GetDefaultObject(true)));
+		if(MovementDirection != FVector::ZeroVector)
+		{
+			if(MovementDirection.X > 0)
+				SetState(Cast<UState>(IdleUp->GetDefaultObject(true)));
+			else if(MovementDirection.X < 0)
+				SetState(Cast<UState>(Idle->GetDefaultObject(true)));
+			else if(MovementDirection.Y < 0)
+				SetState(Cast<UState>(IdleRight->GetDefaultObject(true)));
+			else if(MovementDirection.Y > 0)
+				SetState(Cast<UState>(IdleLeft->GetDefaultObject(true)));
 
-		MovementDirection = FVector::ZeroVector;
+			MovementDirection = FVector::ZeroVector;
+		}
 	}
 }

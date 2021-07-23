@@ -32,4 +32,9 @@ void UState::Tick_Implementation(float DeltaSeconds, class AStateManager* StateM
 void UState::OnAnimationEnd_Implementation(class AStateManager* StateManager)
 {
 	GEngine->AddOnScreenDebugMessage(rand(), 2, FColor::Blue, "Finished");
+
+	if(Type == EStateType::COMBAT)
+		StateManager->SetIgnoreMovementStateMachine(false);
+	
+	StateManager->SetPreviousState();
 }
