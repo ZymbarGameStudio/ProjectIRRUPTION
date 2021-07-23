@@ -25,6 +25,8 @@ protected:
 	class UState* CurrentState;
 	class UState* PreviousState;
 
+	struct FVector MovementDirection = FVector::ZeroVector;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

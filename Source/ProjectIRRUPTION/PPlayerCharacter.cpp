@@ -39,6 +39,14 @@ void APPlayerCharacter::BeginPlay()
 		SetState(Cast<UState>(Idle->GetDefaultObject(true)));
 }
 
+void APPlayerCharacter::Tick(float DeltaSeconds)
+{
+	ProcessMovementStateMachine();
+
+	Super::Tick(DeltaSeconds);
+}
+
+
 void APPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -58,6 +66,8 @@ void APPlayerCharacter::MoveForward(float AxisValue)
 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 
+		this->MovementDirection = FVector(AxisValue, this->MovementDirection.Y, this->MovementDirection.Z);
+
 		AddMovementInput(Direction, AxisValue);
 	}
 }
@@ -70,6 +80,8 @@ void APPlayerCharacter::MoveSides(float AxisValue)
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		
+		this->MovementDirection = FVector(this->MovementDirection.X, AxisValue, this->MovementDirection.Z);
 
 		AddMovementInput(Direction, AxisValue);
 	}
@@ -91,3 +103,19 @@ void APPlayerCharacter::Interact()
 		Interactable->Interact();
 }
 
+void APPlayerCharacter::ProcessMovementStateMachine()
+{
+	if(MovementDirection != FVector::ZeroVector)
+	{
+		if(MovementDirection.X > 0)
+			SetState(Cast<UState>(IdleUp->GetDefaultObject(true)));
+		else if(MovementDirection.X < 0)
+			SetState(Cast<UState>(Idle->GetDefaultObject(true)));
+		else if(MovementDirection.Y < 0)
+			SetState(Cast<UState>(IdleRight->GetDefaultObject(true)));
+		else if(MovementDirection.Y > 0)
+			SetState(Cast<UState>(IdleLeft->GetDefaultObject(true)));
+
+		MovementDirection = FVector::ZeroVector;
+	}
+}
