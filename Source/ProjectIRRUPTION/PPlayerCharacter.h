@@ -75,7 +75,7 @@ protected:
 	virtual void Tick(float DeltaSeconds) override;
 	
 	// STATE MACHINE
-	void ProcessMovementStateMachine();
+	virtual void ProcessMovementStateMachine() override;
 	
 	//CAMERA
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)

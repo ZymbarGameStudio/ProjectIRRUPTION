@@ -6,9 +6,6 @@
 #include "IdleState.h"
 #include "IInteractable.h"
 #include "PaperFlipbookComponent.h"
-#include "PlayerIdleLeftState.h"
-#include "PlayerIdleRightState.h"
-#include "PlayerIdleUpState.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -35,6 +32,10 @@ APPlayerCharacter::APPlayerCharacter()
 	GetCharacterMovement()->MaxWalkSpeed = 200;
 
 	CameraComponent->SetProjectionMode(ECameraProjectionMode::Orthographic);
+
+	GetCapsuleComponent()->SetCapsuleHalfHeight(16.0f);
+	GetCapsuleComponent()->SetCapsuleRadius(4.0f);
+	GetCapsuleComponent()->ComponentTags.Add("PlayerCollider");
 }
 
 void APPlayerCharacter::BeginPlay()

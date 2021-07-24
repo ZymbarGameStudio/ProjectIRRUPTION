@@ -4,13 +4,13 @@
 #include "StateManager.h"
 
 #include "PaperFlipbookComponent.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 AStateManager::AStateManager()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 // Called when the game starts or when spawned
@@ -49,6 +49,14 @@ void AStateManager::SetState(UState* NewState)
 	CurrentState->OnStateEnter(this);
 }
 
+void AStateManager::SetState(TSubclassOf<UState> NewState)
+{
+	UState* State = Cast<UState>(NewState->GetDefaultObject(true));
+
+	SetState(State);
+}
+
+
 void AStateManager::SetStateToCurrentMovimentationState()
 {
 	if(CurrentMovimentationState)
@@ -74,4 +82,9 @@ void AStateManager::SetAnimationEnd()
 		GetWorld()->GetTimerManager().ClearTimer(OnAnimationEndTimerHandle);
 	
 	GetWorld()->GetTimerManager().SetTimer(OnAnimationEndTimerHandle, this, &AStateManager::OnAnimationEnd, GetSprite()->GetFlipbookLength());
+}
+
+void AStateManager::ProcessMovementStateMachine()
+{
+	
 }

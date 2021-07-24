@@ -34,6 +34,10 @@ protected:
 
 	struct FTimerHandle OnAnimationEndTimerHandle;
 	void OnAnimationEnd();
+
+	// STATE MACHINE
+	virtual void ProcessMovementStateMachine();
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -42,6 +46,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual void SetState(UState* NewState);
+	virtual void SetState(TSubclassOf<UState> NewState);
 
 	virtual void SetStateToCurrentMovimentationState();
 
