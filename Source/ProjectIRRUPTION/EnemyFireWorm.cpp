@@ -3,9 +3,12 @@
 
 #include "EnemyFireWorm.h"
 
+#include "EnemyFireWormAIController.h"
 #include "PaperFlipbookComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 AEnemyFireWorm::AEnemyFireWorm()
 {
@@ -22,12 +25,24 @@ AEnemyFireWorm::AEnemyFireWorm()
 
 	BoxComponent->SetCollisionResponseToChannels(ECollisionResponse::ECR_Overlap);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+
+	GetCharacterMovement()->MaxWalkSpeed = 50.0f;
 }
 
 void AEnemyFireWorm::BeginPlay()
 {
 	Super::BeginPlay();
 
+	AController* ControllerBase = GetController();
+
+	AEnemyFireWormAIController* AIController = Cast<AEnemyFireWormAIController>(ControllerBase);
+
+	if(AIController)
+	{
+		AIController->GetBlackboardComponent()->SetValueAsVector("StartingLocation", GetActorLocation());
+		AIController->GetBlackboardComponent()->SetValueAsObject("SelfActor", this);
+	}
+	
 	if(Idle)
 		SetState(Idle);
 }
