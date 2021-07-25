@@ -23,7 +23,7 @@ void UState::OnStateExit_Implementation(class AStateManager* StateManager)
 	
 }
 
-void UState::Tick_Implementation(float DeltaSeconds, class AStateManager* StateManager)
+void UState::Tick(float DeltaSeconds, class AStateManager* StateManager)
 {
 	
 }

@@ -12,7 +12,7 @@
 
 AEnemyFireWorm::AEnemyFireWorm()
 {
-	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
+	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollisionComponent"));
 
 	BoxComponent->SetupAttachment(GetRootComponent());
 	
@@ -25,8 +25,11 @@ AEnemyFireWorm::AEnemyFireWorm()
 
 	BoxComponent->SetCollisionResponseToChannels(ECollisionResponse::ECR_Overlap);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
-
+	BoxComponent->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
+	
 	GetCharacterMovement()->MaxWalkSpeed = 50.0f;
+
+	this->Tags.Add("Enemy");
 }
 
 void AEnemyFireWorm::BeginPlay()
@@ -42,7 +45,7 @@ void AEnemyFireWorm::BeginPlay()
 		AIController->GetBlackboardComponent()->SetValueAsVector("StartingLocation", GetActorLocation());
 		AIController->GetBlackboardComponent()->SetValueAsObject("SelfActor", this);
 	}
-	
+
 	if(Idle)
 		SetState(Idle);
 }

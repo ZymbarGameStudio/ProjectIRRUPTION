@@ -23,12 +23,12 @@ void AStateManager::BeginPlay()
 // Called every frame
 void AStateManager::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
-
 	ProccessMovementStateMachine();
 
 	if(CurrentState)
 		CurrentState->Tick(DeltaTime, this);
+
+	Super::Tick(DeltaTime);
 }
 
 // Called to bind functionality to input

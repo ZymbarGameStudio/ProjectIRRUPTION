@@ -33,6 +33,6 @@ protected:
 
 	virtual void ProccessMovementStateMachine() override;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class UBoxComponent* BoxComponent;
 };

@@ -16,4 +16,7 @@ class PROJECTIRRUPTION_API UPlayerAttackDownState : public UState
 
 public:
 	UPlayerAttackDownState();
+
+protected:
+	virtual void Tick(float DeltaSeconds, AStateManager* StateManager) override;
 };

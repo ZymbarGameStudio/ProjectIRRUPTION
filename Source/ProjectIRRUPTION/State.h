@@ -23,8 +23,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void OnStateEnter(class AStateManager* StateManager);
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void Tick(float DeltaSeconds, class AStateManager* StateManager);
+	virtual void Tick(float DeltaSeconds, class AStateManager* StateManager);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void OnStateExit(class AStateManager* StateManager);

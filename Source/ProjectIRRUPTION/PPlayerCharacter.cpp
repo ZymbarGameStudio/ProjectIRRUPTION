@@ -3,6 +3,7 @@
 
 #include "PPlayerCharacter.h"
 
+#include "DrawDebugHelpers.h"
 #include "IdleState.h"
 #include "IInteractable.h"
 #include "PaperFlipbookComponent.h"
@@ -48,8 +49,6 @@ void APPlayerCharacter::BeginPlay()
 
 void APPlayerCharacter::Tick(float DeltaSeconds)
 {
-	ProccessMovementStateMachine();
-
 	Super::Tick(DeltaSeconds);
 }
 
