@@ -31,6 +31,8 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	virtual void ProccessMovementStateMachine() override;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	class UBoxComponent* BoxComponent;
 };

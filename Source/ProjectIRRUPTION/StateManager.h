@@ -36,7 +36,7 @@ protected:
 	void OnAnimationEnd();
 
 	// STATE MACHINE
-	virtual void ProcessMovementStateMachine();
+	virtual void ProccessMovementStateMachine();
 	
 public:	
 	// Called every frame

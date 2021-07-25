@@ -25,6 +25,8 @@ void AStateManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	ProccessMovementStateMachine();
+
 	if(CurrentState)
 		CurrentState->Tick(DeltaTime, this);
 }
@@ -84,7 +86,7 @@ void AStateManager::SetAnimationEnd()
 	GetWorld()->GetTimerManager().SetTimer(OnAnimationEndTimerHandle, this, &AStateManager::OnAnimationEnd, GetSprite()->GetFlipbookLength());
 }
 
-void AStateManager::ProcessMovementStateMachine()
+void AStateManager::ProccessMovementStateMachine()
 {
 	
 }

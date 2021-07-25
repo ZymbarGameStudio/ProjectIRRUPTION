@@ -52,3 +52,32 @@ void AEnemyFireWorm::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 }
 
+void AEnemyFireWorm::ProccessMovementStateMachine()
+{
+	if(!IgnoreMovementStateMachine)
+	{
+		if(GetVelocity() != FVector::ZeroVector)
+		{
+			MovementDirection = FVector(GetVelocity().X, GetVelocity().Y, GetVelocity().Z);
+			
+			bool success = MovementDirection.Normalize();
+
+			SetState(Walk);
+
+			if(success)
+			{
+				if(MovementDirection.Y > 0)
+					SetActorRelativeRotation(FQuat(FRotator(0.0, 180.0, 0.0)));
+				else if(MovementDirection.Y < 0)
+					SetActorRelativeRotation(FQuat(FRotator(0.0, 0.0, 0.0)));
+			}
+		}
+		else
+		{
+			MovementDirection = FVector::ZeroVector;
+
+			SetState(Idle);
+		}
+	}
+}
+

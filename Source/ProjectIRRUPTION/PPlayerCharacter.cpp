@@ -48,7 +48,7 @@ void APPlayerCharacter::BeginPlay()
 
 void APPlayerCharacter::Tick(float DeltaSeconds)
 {
-	ProcessMovementStateMachine();
+	ProccessMovementStateMachine();
 
 	Super::Tick(DeltaSeconds);
 }
@@ -112,7 +112,7 @@ void APPlayerCharacter::Interact()
 		Interactable->Interact();
 }
 
-void APPlayerCharacter::ProcessMovementStateMachine()
+void APPlayerCharacter::ProccessMovementStateMachine()
 {
 	if(!IgnoreMovementStateMachine)
 	{
