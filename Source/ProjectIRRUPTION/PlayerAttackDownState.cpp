@@ -21,7 +21,7 @@ void UPlayerAttackDownState::Tick(float DeltaSeconds, AStateManager* StateManage
 	FVector End = Start + (FVector(-1.0, 0.0, 0.0) * HitLength);
 	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(10.0f);
 
-	//DrawDebugSphere(StateManager->GetWorld(), End, CollisionShape.GetSphereRadius(), 16, FColor::Red, true);
+	DrawDebugSphere(StateManager->GetWorld(), End, CollisionShape.GetSphereRadius(), 16, FColor::Red, true, 2);
 	bool success = StateManager->GetWorld()->SweepMultiByChannel(OutHits, Start, End, FQuat::Identity, ECollisionChannel::ECC_Pawn, CollisionShape);
 
 	if(success)
