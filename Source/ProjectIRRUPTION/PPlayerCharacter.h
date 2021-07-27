@@ -57,6 +57,8 @@ public:
 
 	UFUNCTION()
 	void SetInteractable(TScriptInterface<class IInteractable> NewInteractable);
+	
+	void CastMeleeAttack(FVector Direction);
 
 protected:
 	// INPUT/ACTIONS
