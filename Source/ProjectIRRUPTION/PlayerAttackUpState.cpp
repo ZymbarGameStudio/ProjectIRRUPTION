@@ -19,7 +19,7 @@ void UPlayerAttackUpState::Tick(float DeltaSeconds, AStateManager* StateManager)
 	FVector Start = StateManager->GetSprite()->GetComponentLocation() + (MovementDirection * 5);
 	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(10.0);
 	
-	DrawDebugSphere(StateManager->GetWorld(), Start, CollisionShape.GetSphereRadius(), 16, FColor::Red, true);
+	DrawDebugSphere(StateManager->GetWorld(), Start, CollisionShape.GetSphereRadius(), 16, FColor::Red, true, 0.1);
 
 	TArray<FHitResult> OutHits;
 
@@ -33,13 +33,12 @@ void UPlayerAttackUpState::Tick(float DeltaSeconds, AStateManager* StateManager)
 
 			if(Target->ActorHasTag("Enemy"))
 			{
-				ACharacter* Enemy = Cast<ACharacter>(Target);
+				IKillable* Enemy = Cast<IKillable>(Target);
 
 				if(Enemy)
 				{
 					GEngine->AddOnScreenDebugMessage(rand(), 2, FColor::Cyan, "ENEMY");
-
-					Enemy->GetCharacterMovement()->AddImpulse(MovementDirection * 1000.0, true);
+					Enemy->Execute_ReceiveDamange(Target, 1, MovementDirection);
 				}
 			}
 		}

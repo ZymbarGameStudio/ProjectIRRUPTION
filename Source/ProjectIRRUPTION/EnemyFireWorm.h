@@ -33,6 +33,8 @@ protected:
 
 	virtual void ProccessMovementStateMachine() override;
 
+	virtual float ReceiveDamange_Implementation(float DamageAmount, FVector HitDirection) override;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class UBoxComponent* BoxComponent;
 };

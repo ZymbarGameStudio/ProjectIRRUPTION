@@ -6,11 +6,12 @@
 
 #include "PaperCharacter.h"
 #include "State.h"
+#include "UKillable.h"
 #include "GameFramework/Character.h"
 #include "StateManager.generated.h"
 
 UCLASS()
-class PROJECTIRRUPTION_API AStateManager : public APaperCharacter
+class PROJECTIRRUPTION_API AStateManager : public APaperCharacter, public IKillable
 {
 	GENERATED_BODY()
 

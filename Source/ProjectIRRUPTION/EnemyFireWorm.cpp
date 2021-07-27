@@ -84,3 +84,11 @@ void AEnemyFireWorm::ProccessMovementStateMachine()
 	}
 }
 
+float AEnemyFireWorm::ReceiveDamange_Implementation(float DamageAmount, FVector HitDirection)
+{
+	GEngine->AddOnScreenDebugMessage(rand(), 2, FColor::Cyan, "Damage");
+
+	GetCharacterMovement()->AddImpulse(HitDirection * 1000.0, true);
+
+	return 0.0;
+}
