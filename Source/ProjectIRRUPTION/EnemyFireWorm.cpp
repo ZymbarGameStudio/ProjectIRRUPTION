@@ -3,6 +3,7 @@
 
 #include "EnemyFireWorm.h"
 
+#include "BrainComponent.h"
 #include "EnemyFireWormAIController.h"
 #include "PaperFlipbookComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -86,9 +87,23 @@ void AEnemyFireWorm::ProccessMovementStateMachine()
 
 float AEnemyFireWorm::ReceiveDamange_Implementation(float DamageAmount, FVector HitDirection)
 {
-	GEngine->AddOnScreenDebugMessage(rand(), 2, FColor::Cyan, "Damage");
+	if(!IsImmune)
+	{
+		IsImmune = true;
+		
+		AAIController* AIController = Cast<AAIController>(GetController());
 
-	GetCharacterMovement()->AddImpulse(HitDirection * 1000.0, true);
+		if(AIController)
+		{
+			IgnoreMovementStateMachine = true;
+		
+			AIController->GetBrainComponent()->StopLogic(("HIT"));
 
+			SetState(Hurt);
+		}
+	
+		GetCharacterMovement()->AddImpulse(HitDirection * 1000.0, true);
+	}
+	
 	return 0.0;
 }

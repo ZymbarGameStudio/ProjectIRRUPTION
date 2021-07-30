@@ -153,7 +153,7 @@ void APPlayerCharacter::CastMeleeAttack(FVector Direction)
 	FVector Start = GetSprite()->GetComponentLocation() + (Direction * 5);
 	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(10.0);
 	
-	DrawDebugSphere(GetWorld(), Start, CollisionShape.GetSphereRadius(), 16, FColor::Red, true, 0.1);
+	//DrawDebugSphere(GetWorld(), Start, CollisionShape.GetSphereRadius(), 16, FColor::Red, true, 0.1);
 
 	TArray<FHitResult> OutHits;
 
@@ -171,7 +171,6 @@ void APPlayerCharacter::CastMeleeAttack(FVector Direction)
 
 				if(Enemy)
 				{
-					GEngine->AddOnScreenDebugMessage(rand(), 2, FColor::Cyan, "ENEMY");
 					Enemy->Execute_ReceiveDamange(Target, 1, Direction);
 				}
 			}

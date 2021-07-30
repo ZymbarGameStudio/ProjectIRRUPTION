@@ -90,3 +90,8 @@ void AStateManager::ProccessMovementStateMachine()
 {
 	
 }
+
+void AStateManager::SetIsImmune(bool Immune)
+{
+	this->IsImmune = Immune;
+}

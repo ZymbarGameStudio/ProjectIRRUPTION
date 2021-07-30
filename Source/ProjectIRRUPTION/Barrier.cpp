@@ -49,8 +49,6 @@ void ABarrier::EnableCapsuleOverlapEvents()
 		GetWorld()->GetTimerManager().ClearTimer(CapsuleOverlapTimerHandle);
 
 	CapsuleComponent->SetGenerateOverlapEvents(true);
-
-	GEngine->AddOnScreenDebugMessage(rand(), 2, FColor::Cyan, "Timer");
 }
 
 

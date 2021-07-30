@@ -25,6 +25,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	class TSubclassOf<UState> Walk;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	class TSubclassOf<UState> Hurt;
+
 public:
 	virtual void Tick(float DeltaSeconds) override;
 
@@ -37,4 +40,5 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class UBoxComponent* BoxComponent;
+
 };
