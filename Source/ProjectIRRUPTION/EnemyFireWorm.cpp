@@ -7,6 +7,7 @@
 #include "EnemyFireWormAIController.h"
 #include "PaperFlipbookComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -14,11 +15,14 @@
 AEnemyFireWorm::AEnemyFireWorm()
 {
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollisionComponent"));
-
+	SkillPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowComponent"));
+	
 	BoxComponent->SetupAttachment(GetRootComponent());
+	SkillPoint->SetupAttachment(GetRootComponent());
 	
 	GetSprite()->SetRelativeLocationAndRotation(FVector(0.0, 0.0, 10.0), FQuat(FRotator(0.0, -90.0, 0.0)));
 	BoxComponent->SetRelativeLocation(FVector(0.0, 0.0, 10.0));
+	SkillPoint->SetRelativeRotation(FQuat(FRotator(0.0, -90.0, 0.0)));
 	
 	GetCapsuleComponent()->SetCapsuleHalfHeight(10.0);
 	GetCapsuleComponent()->SetCapsuleRadius(10.0);
@@ -106,4 +110,19 @@ float AEnemyFireWorm::ReceiveDamange_Implementation(float DamageAmount, FVector 
 	}
 	
 	return 0.0;
+}
+
+void AEnemyFireWorm::CastFireBall()
+{
+	if (CanAttack)
+	{
+		IgnoreMovementStateMachine = true;
+
+		SetState(Attack);
+	}
+}
+
+UArrowComponent* AEnemyFireWorm::GetSkillPoint()
+{
+	return this->SkillPoint;
 }

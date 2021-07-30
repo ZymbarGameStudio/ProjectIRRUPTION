@@ -20,16 +20,23 @@ public:
 protected:
 	//STATES
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	class TSubclassOf<UState> Idle;
+	class TSubclassOf<class UState> Idle;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	class TSubclassOf<UState> Walk;
+	class TSubclassOf<class UState> Walk;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	class TSubclassOf<UState> Hurt;
+	class TSubclassOf<class UState> Hurt;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	class TSubclassOf<class UState> Attack;
 
 public:
 	virtual void Tick(float DeltaSeconds) override;
+	
+	void CastFireBall();
+
+	UArrowComponent* GetSkillPoint();
 
 protected:
 	virtual void BeginPlay() override;
@@ -41,4 +48,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class UBoxComponent* BoxComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	class UArrowComponent* SkillPoint;
 };

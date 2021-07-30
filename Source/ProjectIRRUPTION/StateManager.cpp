@@ -83,7 +83,7 @@ void AStateManager::SetAnimationEnd()
 	if(OnAnimationEndTimerHandle.IsValid())
 		GetWorld()->GetTimerManager().ClearTimer(OnAnimationEndTimerHandle);
 	
-	GetWorld()->GetTimerManager().SetTimer(OnAnimationEndTimerHandle, this, &AStateManager::OnAnimationEnd, GetSprite()->GetFlipbookLength());
+	GetWorld()->GetTimerManager().SetTimer(OnAnimationEndTimerHandle, this, &AStateManager::OnAnimationEnd, GetSprite()->GetFlipbookLength() * .9);
 }
 
 void AStateManager::ProccessMovementStateMachine()
