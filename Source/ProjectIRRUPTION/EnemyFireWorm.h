@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
+#include "BaseEnemy.h"
 #include "StateManager.h"
 #include "EnemyFireWorm.generated.h"
 
@@ -10,7 +12,7 @@
  * 
  */
 UCLASS()
-class PROJECTIRRUPTION_API AEnemyFireWorm : public AStateManager
+class PROJECTIRRUPTION_API AEnemyFireWorm : public ABaseEnemy
 {
 	GENERATED_BODY()
 

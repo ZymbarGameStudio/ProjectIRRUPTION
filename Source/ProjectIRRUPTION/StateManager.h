@@ -11,7 +11,7 @@
 #include "StateManager.generated.h"
 
 UCLASS()
-class PROJECTIRRUPTION_API AStateManager : public APaperCharacter, public IKillable
+class PROJECTIRRUPTION_API AStateManager : public APaperCharacter
 {
 	GENERATED_BODY()
 
