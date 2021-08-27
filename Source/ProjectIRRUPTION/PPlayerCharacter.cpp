@@ -67,7 +67,7 @@ void APPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void APPlayerCharacter::MoveForward(float AxisValue)
 {
-	if(Controller != nullptr && AxisValue != 0.0f)
+	if(Controller != nullptr && AxisValue != 0.0f && CanMove)
 	{
 		const FRotator Rotation = GetController()->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
@@ -82,7 +82,7 @@ void APPlayerCharacter::MoveForward(float AxisValue)
 
 void APPlayerCharacter::MoveSides(float AxisValue)
 {
-	if(Controller != nullptr && AxisValue != 0.0f)
+	if(Controller != nullptr && AxisValue != 0.0f && CanMove)
 	{
 		const FRotator Rotation = GetController()->GetControlRotation();;
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
@@ -150,6 +150,8 @@ void APPlayerCharacter::Attack()
 
 void APPlayerCharacter::CastMeleeAttack(FVector Direction)
 {
+	CanMove = false;
+	
 	FVector Start = GetSprite()->GetComponentLocation() + (Direction * 5);
 	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(10.0);
 	

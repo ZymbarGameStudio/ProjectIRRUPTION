@@ -24,3 +24,10 @@ void UPlayerAttackLeftState::Tick(float DeltaSeconds, AStateManager* StateManage
 
 	Super::Tick(DeltaSeconds, StateManager);
 }
+
+void UPlayerAttackLeftState::OnAnimationEnd_Implementation(AStateManager* StateManager)
+{
+	StateManager->SetCanMove(true);
+	
+	Super::OnAnimationEnd_Implementation(StateManager);
+}

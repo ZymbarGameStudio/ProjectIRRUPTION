@@ -32,7 +32,7 @@ protected:
 	bool IgnoreMovementStateMachine = false;
 	
 	bool CanAttack = true;
-	
+	bool CanMove = true;
 	bool IsImmune = false;
 
 	struct FTimerHandle OnAnimationEndTimerHandle;
@@ -54,8 +54,13 @@ public:
 	virtual void SetStateToCurrentMovimentationState();
 
 	void SetIgnoreMovementStateMachine(bool Ignore);
-
+	
 	void SetIsImmune(bool Immune);
+	
+	void SetCanMove(bool Enabled)
+	{
+		this->CanMove = Enabled;
+	}
 	
 	void SetAnimationEnd();
 };

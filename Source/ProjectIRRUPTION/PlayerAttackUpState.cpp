@@ -23,3 +23,9 @@ void UPlayerAttackUpState::Tick(float DeltaSeconds, AStateManager* StateManager)
 	Super::Tick(DeltaSeconds, StateManager);
 }
 
+void UPlayerAttackUpState::OnAnimationEnd_Implementation(AStateManager* StateManager)
+{
+	StateManager->SetCanMove(true);
+	
+	Super::OnAnimationEnd_Implementation(StateManager);
+}

@@ -19,4 +19,6 @@ public:
 
 protected:
 	virtual void Tick(float DeltaSeconds, AStateManager* StateManager) override;
+
+	virtual void OnAnimationEnd_Implementation(AStateManager* StateManager) override;
 };
