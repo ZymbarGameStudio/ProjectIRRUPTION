@@ -93,6 +93,8 @@ float AEnemyFireWorm::ReceiveDamange_Implementation(float DamageAmount, FVector 
 {
 	if(!IsImmune)
 	{
+		Super::ReceiveDamange_Implementation(DamageAmount, HitDirection);
+		
 		IsImmune = true;
 		
 		AAIController* AIController = Cast<AAIController>(GetController());
@@ -109,7 +111,7 @@ float AEnemyFireWorm::ReceiveDamange_Implementation(float DamageAmount, FVector 
 		GetCharacterMovement()->AddImpulse(HitDirection * 1000.0, true);
 	}
 	
-	return 0.0;
+	return CurrentHealth;
 }
 
 void AEnemyFireWorm::CastFireBall()

@@ -21,7 +21,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MaxHealth;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	float CurrentHealth;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
@@ -31,5 +31,10 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 
 protected:
+	
 	virtual void BeginPlay() override;
+
+	virtual float ReceiveDamange_Implementation(float DamageAmount, FVector HitDirection) override;
+
+	void UpdateHealthBar();
 };
