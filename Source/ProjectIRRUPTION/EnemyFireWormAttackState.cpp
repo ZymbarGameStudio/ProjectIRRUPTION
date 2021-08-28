@@ -22,10 +22,10 @@ void UEnemyFireWormAttackState::OnStateEnter_Implementation(AStateManager* State
 	
 	if(AttackTimer.IsValid())
 		StateManager->GetWorld()->GetTimerManager().ClearTimer(AttackTimer);
-
-	StateManager->GetWorld()->GetTimerManager().SetTimer(AttackTimer, this, &UEnemyFireWormAttackState::OnAttack, StateManager->GetSprite()->GetFlipbookLength() * 0.95);
-
+	
 	Super::OnStateEnter_Implementation(StateManager);
+
+	StateManager->GetWorld()->GetTimerManager().SetTimer(AttackTimer, this, &UEnemyFireWormAttackState::OnAttack, StateManager->GetSprite()->GetFlipbookLength() * 0.733);
 }
 
 void UEnemyFireWormAttackState::OnAttack()

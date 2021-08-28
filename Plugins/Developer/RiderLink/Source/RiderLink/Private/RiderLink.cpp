@@ -3,6 +3,7 @@
 #include "ProtocolFactory.h"
 #include "UE4Library/UE4Library.Generated.h"
 
+#include "Misc/ScopeRWLock.h"
 #include "Modules/ModuleManager.h"
 #include "HAL/Platform.h"
 
@@ -52,6 +53,7 @@ void FRiderLinkModule::InitProtocol()
 		{
 			if (!IsConnected) return;
 
+			FRWScopeLock LockOnConnect(ModelLock, SLT_Write);
 			EditorModel = MakeUnique<JetBrains::EditorPlugin::RdEditorModel>();
 			EditorModel->connect(ConnectionLifetime, Protocol.Get());
 			JetBrains::EditorPlugin::UE4Library::serializersOwner.registerSerializersCore(
@@ -61,9 +63,8 @@ void FRiderLinkModule::InitProtocol()
 			{
 				Scheduler.queue([&]()mutable
 				{
-					RdIsModelAlive.set(false);
-					EditorModel.Reset();
-					// WireLifetimeDef->terminate();
+                    FRWScopeLock LockOnDisconnect(ModelLock, SLT_Write);
+                    RdIsModelAlive.set(false);
 				});
 			});
 			RdIsModelAlive.set(true);
@@ -94,6 +95,18 @@ void FRiderLinkModule::QueueAction(TFunction<void()> Handler)
 	{
 		Handler();
 	});
+}
+
+bool FRiderLinkModule::FireAsyncAction(TFunction<void(JetBrains::EditorPlugin::RdEditorModel const&)> Handler)
+{
+	FRWScopeLock Lock(ModelLock, SLT_ReadOnly);
+	if(!RdIsModelAlive.has_value()) return false;
+	
+	if(RdIsModelAlive.get())
+	{
+		Handler(*EditorModel.Get());
+	}
+	return RdIsModelAlive.get();
 }
 
 #undef LOCTEXT_NAMESPACE
