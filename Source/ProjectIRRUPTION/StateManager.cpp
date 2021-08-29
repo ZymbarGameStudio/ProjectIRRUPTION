@@ -83,12 +83,21 @@ void AStateManager::SetAnimationEnd()
 	if(OnAnimationEndTimerHandle.IsValid())
 		GetWorld()->GetTimerManager().ClearTimer(OnAnimationEndTimerHandle);
 	
-	GetWorld()->GetTimerManager().SetTimer(OnAnimationEndTimerHandle, this, &AStateManager::OnAnimationEnd, GetSprite()->GetFlipbookLength() * .9);
+	GetWorld()->GetTimerManager().SetTimer(OnAnimationEndTimerHandle, this, &AStateManager::OnAnimationEnd, GetSprite()->GetFlipbookLength() * .95);
 }
 
 void AStateManager::ProccessMovementStateMachine()
 {
-	
+	if(!IgnoreMovementStateMachine)
+	{
+		if(GetVelocity() != FVector::ZeroVector)
+		{
+			if(GetVelocity().Y > 0)
+				GetSprite()->SetRelativeRotation(FQuat(FRotator(0.0, 90.0, 0.0)));
+			else if(GetVelocity().Y < 0)
+				GetSprite()->SetRelativeRotation(FQuat(FRotator(0.0, -90, 0.0)));
+		}
+	}
 }
 
 void AStateManager::SetIsImmune(bool Immune)

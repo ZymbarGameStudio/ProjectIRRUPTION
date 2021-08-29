@@ -18,11 +18,10 @@ AEnemyFireWorm::AEnemyFireWorm()
 	SkillPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowComponent"));
 	
 	BoxComponent->SetupAttachment(GetRootComponent());
-	SkillPoint->SetupAttachment(GetRootComponent());
+	SkillPoint->SetupAttachment(GetSprite());
 	
 	GetSprite()->SetRelativeLocationAndRotation(FVector(0.0, 0.0, 10.0), FQuat(FRotator(0.0, -90.0, 0.0)));
 	BoxComponent->SetRelativeLocation(FVector(0.0, 0.0, 10.0));
-	SkillPoint->SetRelativeRotation(FQuat(FRotator(0.0, -90.0, 0.0)));
 	
 	GetCapsuleComponent()->SetCapsuleHalfHeight(10.0);
 	GetCapsuleComponent()->SetCapsuleRadius(10.0);
@@ -62,25 +61,11 @@ void AEnemyFireWorm::Tick(float DeltaSeconds)
 
 void AEnemyFireWorm::ProccessMovementStateMachine()
 {
+	Super::ProccessMovementStateMachine();
+	
 	if(!IgnoreMovementStateMachine)
 	{
-		if(GetVelocity() != FVector::ZeroVector)
-		{
-			MovementDirection = FVector(GetVelocity().X, GetVelocity().Y, GetVelocity().Z);
-			
-			bool success = MovementDirection.Normalize();
-
-			SetState(Walk);
-
-			if(success)
-			{
-				if(MovementDirection.Y > 0)
-					SetActorRelativeRotation(FQuat(FRotator(0.0, 180.0, 0.0)));
-				else if(MovementDirection.Y < 0)
-					SetActorRelativeRotation(FQuat(FRotator(0.0, 0.0, 0.0)));
-			}
-		}
-		else
+		if(GetVelocity() == FVector::ZeroVector)
 		{
 			MovementDirection = FVector::ZeroVector;
 

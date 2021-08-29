@@ -45,18 +45,22 @@ void UEnemyFireWormAttackState::OnAttack()
 			if(FireWorm)
 			{
 				FVector Direction = Target->GetActorLocation() - FireWorm->GetSprite()->GetComponentLocation();
-
+				FRotator Rotation;
+				
 				if(Direction.Y > 0)
-					FireWorm->SetActorRelativeRotation(FQuat(FRotator(0.0, 180.0, 0.0)));
+					Rotation = FRotator(0.0, 90, 0.0);
 				else if(Direction.Y < 0)
-					FireWorm->SetActorRelativeRotation(FQuat(FRotator(0.0, 0.0, 0.0)));
+					Rotation = FRotator(0.0, -90, 0.0);
+
+				FireWorm->GetSprite()->SetRelativeRotation(FQuat(Rotation));
 			
 				FActorSpawnParameters SpawnParameters;
-				AEnemyFireWormFireBall* FireBall = FireWorm->GetWorld()->SpawnActor<AEnemyFireWormFireBall>(Skill, FireWorm->GetSkillPoint()->GetComponentLocation(), CurrentStateManager->GetActorRotation(), SpawnParameters);
+				AEnemyFireWormFireBall* FireBall = FireWorm->GetWorld()->SpawnActor<AEnemyFireWormFireBall>(Skill, FireWorm->GetSkillPoint()->GetComponentLocation(), Rotation, SpawnParameters);
 
 				if(FireBall)
 				{
 					FireBall->GetProjectileMovementComponent()->Velocity = Direction;
+					
 					GEngine->AddOnScreenDebugMessage(rand(), 2, FColor::Cyan, "Fireball");
 				}
 			}

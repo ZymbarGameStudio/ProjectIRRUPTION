@@ -21,7 +21,7 @@ APPlayerCharacter::APPlayerCharacter()
 	SpringArmComponent->SetRelativeRotation(FQuat(FRotator(0.0f, 90.0f, 0.0f)));
 	GetSprite()->SetRelativeRotation(FQuat(FRotator(0.0f, -90.0f, 0.0f)));
 
-	SpringArmComponent->SetupAttachment(GetSprite());
+	SpringArmComponent->SetupAttachment(GetRootComponent());
 	CameraComponent->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
 
 	SpringArmComponent->bUsePawnControlRotation = true;
@@ -113,6 +113,8 @@ void APPlayerCharacter::Interact()
 
 void APPlayerCharacter::ProccessMovementStateMachine()
 {
+	Super::ProccessMovementStateMachine();
+	
 	if(!IgnoreMovementStateMachine)
 	{
 		if(MovementDirection != FVector::ZeroVector)
@@ -121,10 +123,8 @@ void APPlayerCharacter::ProccessMovementStateMachine()
 				SetState(Cast<UState>(IdleUp->GetDefaultObject(true)));
 			else if(MovementDirection.X < 0)
 				SetState(Cast<UState>(Idle->GetDefaultObject(true)));
-			else if(MovementDirection.Y < 0)
+			else if(MovementDirection.Y != 0)
 				SetState(Cast<UState>(IdleRight->GetDefaultObject(true)));
-			else if(MovementDirection.Y > 0)
-				SetState(Cast<UState>(IdleLeft->GetDefaultObject(true)));
 
 			MovementDirection = FVector::ZeroVector;
 		}
@@ -142,9 +142,7 @@ void APPlayerCharacter::Attack()
 		else if(CurrentMovimentationState->GetClass() == Idle->GetDefaultObject()->GetClass())
 			SetState(Cast<UState>(AttackDown->GetDefaultObject(true)));
 		else if(CurrentMovimentationState->GetClass() == IdleRight->GetDefaultObject()->GetClass())
-			SetState(Cast<UState>(AttackRight->GetDefaultObject(true)));
-		else if(CurrentMovimentationState->GetClass() == IdleLeft->GetDefaultObject()->GetClass())
-			SetState(Cast<UState>(AttackLeft->GetDefaultObject(true)));
+			SetState(AttackRight);
 	}
 }
 
