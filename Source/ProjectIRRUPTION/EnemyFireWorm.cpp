@@ -14,18 +14,18 @@
 
 AEnemyFireWorm::AEnemyFireWorm()
 {
-	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollisionComponent"));
+	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
 	SkillPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowComponent"));
 	
 	BoxComponent->SetupAttachment(GetRootComponent());
 	SkillPoint->SetupAttachment(GetSprite());
 	
-	GetSprite()->SetRelativeLocationAndRotation(FVector(0.0, 0.0, 10.0), FQuat(FRotator(0.0, -90.0, 0.0)));
-	BoxComponent->SetRelativeLocation(FVector(0.0, 0.0, 10.0));
+	GetSprite()->SetRelativeLocationAndRotation(FVector(0.0, 0.0, 10.0), FQuat(FRotator(0.0, 0.0, 0.0)));
+	BoxComponent->SetRelativeLocationAndRotation(FVector(0.0, 0.0, 10.0), FQuat(FRotator(0.0, 0.0, 0.0)));
 	
 	GetCapsuleComponent()->SetCapsuleHalfHeight(10.0);
 	GetCapsuleComponent()->SetCapsuleRadius(10.0);
-	BoxComponent->SetBoxExtent(FVector(3.0, 21.0, 13.0));
+	BoxComponent->SetBoxExtent(FVector(21.0, 3.0, 13.0));
 
 	BoxComponent->SetCollisionResponseToChannels(ECollisionResponse::ECR_Overlap);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
@@ -67,8 +67,6 @@ void AEnemyFireWorm::ProccessMovementStateMachine()
 	{
 		if(GetVelocity() == FVector::ZeroVector)
 		{
-			MovementDirection = FVector::ZeroVector;
-
 			SetState(Idle);
 		}
 	}

@@ -18,9 +18,6 @@ APPlayerCharacter::APPlayerCharacter()
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 
-	SpringArmComponent->SetRelativeRotation(FQuat(FRotator(0.0f, 90.0f, 0.0f)));
-	GetSprite()->SetRelativeRotation(FQuat(FRotator(0.0f, -90.0f, 0.0f)));
-
 	SpringArmComponent->SetupAttachment(GetRootComponent());
 	CameraComponent->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
 
@@ -72,10 +69,10 @@ void APPlayerCharacter::MoveForward(float AxisValue)
 		const FRotator Rotation = GetController()->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-		this->MovementDirection = FVector(AxisValue, this->MovementDirection.Y, this->MovementDirection.Z);
-
+		MovementDirection = FVector(MovementDirection.X, AxisValue, MovementDirection.Z);
+		
 		AddMovementInput(Direction, AxisValue);
 	}
 }
@@ -87,10 +84,10 @@ void APPlayerCharacter::MoveSides(float AxisValue)
 		const FRotator Rotation = GetController()->GetControlRotation();;
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		
-		this->MovementDirection = FVector(this->MovementDirection.X, AxisValue, this->MovementDirection.Z);
-
+		MovementDirection = FVector(AxisValue, MovementDirection.Y, MovementDirection.Z);
+		
 		AddMovementInput(Direction, AxisValue);
 	}
 }
@@ -117,13 +114,13 @@ void APPlayerCharacter::ProccessMovementStateMachine()
 	
 	if(!IgnoreMovementStateMachine)
 	{
-		if(MovementDirection != FVector::ZeroVector)
+		if(GetVelocity() != FVector::ZeroVector)
 		{
-			if(MovementDirection.X > 0)
-				SetState(Cast<UState>(IdleUp->GetDefaultObject(true)));
-			else if(MovementDirection.X < 0)
+			if(MovementDirection.Y > 0)
 				SetState(Cast<UState>(Idle->GetDefaultObject(true)));
-			else if(MovementDirection.Y != 0)
+			else if(MovementDirection.Y < 0)
+				SetState(Cast<UState>(IdleUp->GetDefaultObject(true)));
+			else if(MovementDirection.X != 0)
 				SetState(Cast<UState>(IdleRight->GetDefaultObject(true)));
 
 			MovementDirection = FVector::ZeroVector;
@@ -153,7 +150,7 @@ void APPlayerCharacter::CastMeleeAttack(FVector Direction)
 	FVector Start = GetSprite()->GetComponentLocation() + (Direction * 5);
 	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(10.0);
 	
-	//DrawDebugSphere(GetWorld(), Start, CollisionShape.GetSphereRadius(), 16, FColor::Red, true, 0.1);
+	// DrawDebugSphere(GetWorld(), Start, CollisionShape.GetSphereRadius(), 16, FColor::Red, true, 0.1);
 
 	TArray<FHitResult> OutHits;
 

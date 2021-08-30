@@ -92,10 +92,10 @@ void AStateManager::ProccessMovementStateMachine()
 	{
 		if(GetVelocity() != FVector::ZeroVector)
 		{
-			if(GetVelocity().Y > 0)
-				GetSprite()->SetRelativeRotation(FQuat(FRotator(0.0, 90.0, 0.0)));
-			else if(GetVelocity().Y < 0)
-				GetSprite()->SetRelativeRotation(FQuat(FRotator(0.0, -90, 0.0)));
+			if(GetVelocity().X > 0)
+				GetSprite()->SetRelativeRotation(FQuat(FRotator(0.0, 0, 0.0)));
+			else if(GetVelocity().X < 0)
+				GetSprite()->SetRelativeRotation(FQuat(FRotator(0.0, 180, 0.0)));
 		}
 	}
 }

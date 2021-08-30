@@ -18,7 +18,7 @@ void UPlayerAttackRightState::Tick(float DeltaSeconds, AStateManager* StateManag
 
 	if(CurrentPlayer)
 	{
-		FVector Direction = StateManager->GetSprite()->GetRelativeRotation().Yaw > 0 ? FVector(0.0, 1.0, 0.0) : FVector(0.0, -1.0, 0.0);
+		FVector Direction = StateManager->GetSprite()->GetRelativeRotation().Yaw == 0 ? FVector(1.0, 0.0, 0.0) : FVector(-1.0, 0.0, 0.0);
 		CurrentPlayer->CastMeleeAttack(Direction);
 	}
 

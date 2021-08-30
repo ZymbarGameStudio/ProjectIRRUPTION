@@ -19,7 +19,7 @@ void UPlayerAttackLeftState::Tick(float DeltaSeconds, AStateManager* StateManage
 
 	if(CurrentPlayer)
 	{
-		CurrentPlayer->CastMeleeAttack(FVector(0.0, 1.0, 0.0));
+		CurrentPlayer->CastMeleeAttack(FVector(-1.0, 0.0, 0.0));
 	}
 
 	Super::Tick(DeltaSeconds, StateManager);

@@ -47,10 +47,10 @@ void UEnemyFireWormAttackState::OnAttack()
 				FVector Direction = Target->GetActorLocation() - FireWorm->GetSprite()->GetComponentLocation();
 				FRotator Rotation;
 				
-				if(Direction.Y > 0)
-					Rotation = FRotator(0.0, 90, 0.0);
-				else if(Direction.Y < 0)
-					Rotation = FRotator(0.0, -90, 0.0);
+				if(Direction.X > 0)
+					Rotation = FRotator(0.0, 0.0, 0.0);
+				else if(Direction.X < 0)
+					Rotation = FRotator(0.0, 180.0, 0.0);
 
 				FireWorm->GetSprite()->SetRelativeRotation(FQuat(Rotation));
 			
