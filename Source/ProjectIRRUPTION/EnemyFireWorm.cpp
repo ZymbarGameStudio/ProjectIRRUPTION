@@ -81,18 +81,18 @@ float AEnemyFireWorm::ReceiveDamange_Implementation(float DamageAmount, FVector 
 		Super::ReceiveDamange_Implementation(DamageAmount, HitDirection);
 		
 		IsImmune = true;
+		IgnoreMovementStateMachine = true;
 		
 		AAIController* AIController = Cast<AAIController>(GetController());
-
-		if(AIController)
-		{
-			IgnoreMovementStateMachine = true;
 		
+		if(AIController)
 			AIController->GetBrainComponent()->StopLogic(("HIT"));
-
+		
+		if(CurrentHealth <= 0)
+			SetState(Die);
+		else
 			SetState(Hurt);
-		}
-	
+		
 		GetCharacterMovement()->AddImpulse(HitDirection * 1000.0, true);
 	}
 	

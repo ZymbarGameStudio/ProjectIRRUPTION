@@ -33,6 +33,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	class TSubclassOf<class UState> Attack;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	class TSubclassOf<class UState> Die;
+
 public:
 	virtual void Tick(float DeltaSeconds) override;
 	

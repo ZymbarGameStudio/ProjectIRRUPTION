@@ -23,6 +23,10 @@ public:
 protected:
 	virtual void OnStateEnter_Implementation(AStateManager* StateManager) override;
 
+	virtual void OnAnimationEnd_Implementation(AStateManager* StateManager) override;
+
+	virtual void OnStateExit_Implementation(AStateManager* StateManager) override;
+
 	struct FTimerHandle AttackTimer;
 	void OnAttack();
 

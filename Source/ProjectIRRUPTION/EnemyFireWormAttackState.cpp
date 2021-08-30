@@ -67,3 +67,19 @@ void UEnemyFireWormAttackState::OnAttack()
 		}
 	}
 }
+
+void UEnemyFireWormAttackState::OnAnimationEnd_Implementation(AStateManager* StateManager)
+{
+	if(AttackTimer.IsValid())
+		StateManager->GetWorld()->GetTimerManager().ClearTimer(AttackTimer);
+
+	Super::OnAnimationEnd_Implementation(StateManager);
+}
+
+void UEnemyFireWormAttackState::OnStateExit_Implementation(AStateManager* StateManager)
+{
+	if(AttackTimer.IsValid())
+		StateManager->GetWorld()->GetTimerManager().ClearTimer(AttackTimer);
+
+	Super::OnStateExit_Implementation(StateManager);
+}
