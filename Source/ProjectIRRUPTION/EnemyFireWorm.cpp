@@ -20,7 +20,7 @@ AEnemyFireWorm::AEnemyFireWorm()
 	BoxComponent->SetupAttachment(GetRootComponent());
 	SkillPoint->SetupAttachment(GetSprite());
 	
-	GetSprite()->SetRelativeLocationAndRotation(FVector(0.0, 0.0, 10.0), FQuat(FRotator(0.0, 0.0, 0.0)));
+	GetSprite()->SetRelativeLocationAndRotation(FVector(0.0, 0.0, 2.0), FQuat(FRotator(0.0, 0.0, 0.0)));
 	BoxComponent->SetRelativeLocationAndRotation(FVector(0.0, 0.0, 10.0), FQuat(FRotator(0.0, 0.0, 0.0)));
 	
 	GetCapsuleComponent()->SetCapsuleHalfHeight(10.0);

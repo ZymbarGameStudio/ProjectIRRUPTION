@@ -29,7 +29,7 @@ APPlayerCharacter::APPlayerCharacter()
 
 	GetCharacterMovement()->MaxWalkSpeed = 200;
 
-	CameraComponent->SetProjectionMode(ECameraProjectionMode::Orthographic);
+	CameraComponent->SetProjectionMode(ECameraProjectionMode::Perspective);
 
 	GetCapsuleComponent()->SetCapsuleHalfHeight(16.0f);
 	GetCapsuleComponent()->SetCapsuleRadius(4.0f);
