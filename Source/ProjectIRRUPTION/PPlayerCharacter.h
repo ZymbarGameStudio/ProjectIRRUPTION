@@ -34,6 +34,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Animations)
 	TSubclassOf<class UState> IdleUp;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Animations)
+	TSubclassOf<class UState> WalkSides;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Animations)
+	TSubclassOf<class UState> WalkDown;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Animations)
+	TSubclassOf<class UState> WalkUp;
+
 	// ATTACK STATES
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Animations)
 	TSubclassOf<class UState> AttackDown;

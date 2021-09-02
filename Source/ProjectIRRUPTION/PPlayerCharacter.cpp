@@ -117,14 +117,23 @@ void APPlayerCharacter::ProccessMovementStateMachine()
 		if(GetVelocity() != FVector::ZeroVector)
 		{
 			if(MovementDirection.Y > 0)
-				SetState(Cast<UState>(Idle->GetDefaultObject(true)));
+				SetState(WalkDown);
 			else if(MovementDirection.Y < 0)
-				SetState(Cast<UState>(IdleUp->GetDefaultObject(true)));
+				SetState(WalkUp);
 			else if(MovementDirection.X != 0)
-				SetState(Cast<UState>(IdleRight->GetDefaultObject(true)));
-
-			MovementDirection = FVector::ZeroVector;
+				SetState(WalkSides);
 		}
+		else
+		{
+			if(CurrentMovimentationState->GetClass() == WalkDown->GetDefaultObject()->GetClass())
+				SetState(Idle);
+			else if (CurrentMovimentationState->GetClass() == WalkUp->GetDefaultObject()->GetClass())
+				SetState(IdleUp);
+			else if (CurrentMovimentationState->GetClass() == WalkSides->GetDefaultObject()->GetClass())
+				SetState(IdleRight);
+		}
+
+		MovementDirection = FVector::ZeroVector;
 	}
 }
 
@@ -134,11 +143,11 @@ void APPlayerCharacter::Attack()
 	{
 		IgnoreMovementStateMachine = true;
 		
-		if(CurrentMovimentationState->GetClass() == IdleUp->GetDefaultObject()->GetClass())
-			SetState(Cast<UState>(AttackUp->GetDefaultObject(true)));
-		else if(CurrentMovimentationState->GetClass() == Idle->GetDefaultObject()->GetClass())
-			SetState(Cast<UState>(AttackDown->GetDefaultObject(true)));
-		else if(CurrentMovimentationState->GetClass() == IdleRight->GetDefaultObject()->GetClass())
+		if(CurrentMovimentationState->GetClass() == IdleUp->GetDefaultObject()->GetClass() || CurrentMovimentationState->GetClass() == WalkUp->GetDefaultObject()->GetClass())
+			SetState(AttackUp);
+		else if(CurrentMovimentationState->GetClass() == Idle->GetDefaultObject()->GetClass() || CurrentMovimentationState->GetClass() == WalkDown->GetDefaultObject()->GetClass())
+			SetState(AttackDown);
+		else if(CurrentMovimentationState->GetClass() == IdleRight->GetDefaultObject()->GetClass() || CurrentMovimentationState->GetClass() == WalkSides->GetDefaultObject()->GetClass())
 			SetState(AttackRight);
 	}
 }
@@ -147,8 +156,8 @@ void APPlayerCharacter::CastMeleeAttack(FVector Direction)
 {
 	CanMove = false;
 	
-	FVector Start = GetSprite()->GetComponentLocation() + (Direction * 5);
-	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(10.0);
+	FVector Start = GetSprite()->GetComponentLocation() + (Direction * 10);
+	FCollisionShape CollisionShape = FCollisionShape::MakeSphere(15.0);
 	
 	// DrawDebugSphere(GetWorld(), Start, CollisionShape.GetSphereRadius(), 16, FColor::Red, true, 0.1);
 
